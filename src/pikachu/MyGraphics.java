@@ -1,14 +1,10 @@
 package pikachu;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
-
+import java.awt.*;
+import javax.swing.*;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,32 +23,28 @@ public class MyGraphics extends JPanel implements ActionListener {
 	private Point p1 = null;
 	private Point p2 = null;
 	private Algorithm algorithm;
-	private MyLine line;
 	private MyFrame frame;
 	private Color backGroundColor = Color.lightGray;
 	private int item;
 
 	public MyGraphics(MyFrame frame, int row, int col) {
 		this.frame = frame;
-		this.row = row + 2;
+		this.row = row + 2; // Add extra row/column for padding
 		this.col = col + 2;
 		item = row * col / 2;
 
 		setLayout(new GridLayout(row, col, bound, bound));
 		setBackground(backGroundColor);
-		setPreferredSize(new Dimension((size + bound) * col, (size + bound)
-				* row));
+		setPreferredSize(new Dimension((size + bound) * col, (size + bound) * row));
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 		setAlignmentY(JPanel.CENTER_ALIGNMENT);
 
 		newGame();
-
 	}
 
 	public void newGame() {
 		algorithm = new Algorithm(this.row, this.col);
 		addArrayButton();
-
 	}
 
 	private void addArrayButton() {
@@ -69,12 +61,9 @@ public class MyGraphics extends JPanel implements ActionListener {
 
 	private Icon getIcon(int index) {
 		int width = 48, height = 48;
-		Image image = new ImageIcon(getClass().getResource(
-				"/pikachu/icon/icon" + index + ".jpg")).getImage();
-		Icon icon = new ImageIcon(image.getScaledInstance(width, height,
-				image.SCALE_SMOOTH));
+		Image image = new ImageIcon(getClass().getResource("/pikachu/icon/icon" + index + ".jpg")).getImage();
+		Icon icon = new ImageIcon(image.getScaledInstance(width, height, image.SCALE_SMOOTH));
 		return icon;
-
 	}
 
 	private JButton createButton(String action) {
@@ -89,6 +78,7 @@ public class MyGraphics extends JPanel implements ActionListener {
 		System.out.println("delete");
 		setDisable(btn[p1.x][p1.y]);
 		setDisable(btn[p2.x][p2.y]);
+		repaint(); // Trigger repaint to show the updated state
 	}
 
 	private void setDisable(JButton btn) {
@@ -111,36 +101,37 @@ public class MyGraphics extends JPanel implements ActionListener {
 		String btnIndex = e.getActionCommand();
 		int indexDot = btnIndex.lastIndexOf(",");
 		int x = Integer.parseInt(btnIndex.substring(0, indexDot));
-		int y = Integer.parseInt(btnIndex.substring(indexDot + 1,
-				btnIndex.length()));
+		int y = Integer.parseInt(btnIndex.substring(indexDot + 1, btnIndex.length()));
+
 		if (p1 == null) {
 			p1 = new Point(x, y);
 			btn[p1.x][p1.y].setBorder(new LineBorder(Color.red));
 		} else {
 			p2 = new Point(x, y);
-			System.out.println("(" + p1.x + "," + p1.y + ")" + " --> " + "("
-					+ p2.x + "," + p2.y + ")");
-			line = algorithm.checkTwoPoint(p1, p2);
-			if (line != null) {
-				System.out.println("line != null");
+			System.out.println("(" + p1.x + "," + p1.y + ")" + " --> " + "(" + p2.x + "," + p2.y + ")");
 
+			// Kiểm tra điều kiện kết nối (không vẽ đường nối nữa)
+			if (algorithm.checkTwoPoint(p1, p2) != null) {
+				System.out.println("line != null");
 				algorithm.getMatrix()[p1.x][p1.y] = 0;
 				algorithm.getMatrix()[p2.x][p2.y] = 0;
 				algorithm.showMatrix();
 				execute(p1, p2);
-				line = null;
 				score += 10;
 				item--;
 				frame.time++;
 				frame.getLbScore().setText(score + "");
+
+				// Sau khi thực hiện xong, không cần vẽ đường nối nữa
+				repaint(); // gọi repaint để cập nhật giao diện
 			}
+
 			btn[p1.x][p1.y].setBorder(null);
 			p1 = null;
 			p2 = null;
-			System.out.println("done");
+
 			if (item == 0) {
-				frame.showDialogNewGame(
-						"You are winer!\nDo you want play again?", "Win");
+				frame.showDialogNewGame("You are winner!\nDo you want to play again?", "Win");
 			}
 		}
 	}
