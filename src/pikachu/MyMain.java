@@ -10,6 +10,7 @@ public class MyMain {
 		new Thread(frame).start();
 	}
 
+	// main
 	public static void main(String[] args) {
 		new MyMain();
 	}
