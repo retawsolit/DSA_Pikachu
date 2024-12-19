@@ -17,15 +17,8 @@ public class Algorithm {
 		this.row = row;
 		this.col = col;
 		System.out.println(row + "," + col);
-		// readFile();
 		createMatrix();
 		showMatrix();
-		// MyLine line = checkTwoPoint(new Point(10, 4), new Point(9, 6));
-		// if (line != null) {
-		// System.out.println(line.toString());
-		// } else {
-		// System.out.println("null");
-		// }
 	}
 
 	// read matrix from file input
@@ -56,20 +49,18 @@ public class Algorithm {
 	}
 
 	// check with line x, from column y1 to y2
+
 	private boolean checkLineX(int y1, int y2, int x) {
 		System.out.println("check line x");
-		// find point have column max and min
 		int min = Math.min(y1, y2);
 		int max = Math.max(y1, y2);
-		// run column
 		for (int y = min + 1; y < max; y++) {
-			if (matrix[x][y] > notBarrier) { // if see barrier then die
+			if (matrix[x][y] > notBarrier) {
 				System.out.println("die: " + x + "" + y);
 				return false;
 			}
 			System.out.println("ok: " + x + "" + y);
 		}
-		// not die -> success
 		return true;
 	}
 
@@ -90,7 +81,6 @@ public class Algorithm {
 	// check in rectangle
 	private int checkRectX(Point p1, Point p2) {
 		System.out.println("check rect x");
-		// find point have y min and max
 		Point pMinY = p1, pMaxY = p2;
 		if (p1.y > p2.y) {
 			pMinY = p2;
@@ -109,7 +99,6 @@ public class Algorithm {
 				System.out.println("(" + pMinY.x + "," + pMinY.y + ") -> ("
 						+ pMinY.x + "," + y + ") -> (" + pMaxY.x + "," + y
 						+ ") -> (" + pMaxY.x + "," + pMaxY.y + ")");
-				// if three line is true return column y
 				return y;
 			}
 		}
@@ -125,7 +114,6 @@ public class Algorithm {
 			pMinX = p2;
 			pMaxX = p1;
 		}
-		// find line and y begin
 		for (int x = pMinX.x; x <= pMaxX.x; x++) {
 			if (x > pMinX.x && matrix[x][pMinX.y] > notBarrier) {
 				return -1;
@@ -317,15 +305,6 @@ public class Algorithm {
 				i++;
 			}
 		} while (i < row * col / 2);
-
-		// for (i = 1; i < row - 1; i++) {
-		// for (int j = 1; j < col - 1; j++) {
-		// if (imgArr[matrix[i][j]] == 0 || imgArr[matrix[i][j]] % 2 > 0) {
-		// System.out.println(i + "," + j + "-" + imgArr[matrix[i][j]]
-		// + "-" + matrix[i][j]);
-		// }
-		// }
-		// }
 	}
 
 	public int getRow() {
