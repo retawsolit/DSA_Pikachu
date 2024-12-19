@@ -61,7 +61,7 @@ public class MyGraphics extends JPanel implements ActionListener {
 
 	private Icon getIcon(int index) {
 		int width = 48, height = 48;
-		Image image = new ImageIcon(getClass().getResource("/pikachu/icon/icon" + index + ".jpg")).getImage();
+		Image image = new ImageIcon(getClass().getResource("/pikachu/icon/icon" + index + ".png")).getImage();
 		Icon icon = new ImageIcon(image.getScaledInstance(width, height, image.SCALE_SMOOTH));
 		return icon;
 	}

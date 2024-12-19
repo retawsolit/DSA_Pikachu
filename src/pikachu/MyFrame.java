@@ -21,7 +21,7 @@ import javax.swing.border.TitledBorder;
 
 public class MyFrame extends JFrame implements ActionListener, Runnable {
 	private static final long serialVersionUID = 1L;
-	private String author = "Nguyễn Sỹ Thủy - ITITIU21326";
+	private String author = "Pokemon Connect";
 	private int maxTime = 300;
 	public int time = maxTime;
 	private int row = 10;
