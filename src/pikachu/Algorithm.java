@@ -17,15 +17,8 @@ public class Algorithm {
 		this.row = row;
 		this.col = col;
 		System.out.println(row + "," + col);
-		// readFile();
 		createMatrix();
 		showMatrix();
-		// MyLine line = checkTwoPoint(new Point(10, 4), new Point(9, 6));
-		// if (line != null) {
-		// System.out.println(line.toString());
-		// } else {
-		// System.out.println("null");
-		// }
 	}
 
 	// read matrix from file input
@@ -317,15 +310,6 @@ public class Algorithm {
 				i++;
 			}
 		} while (i < row * col / 2);
-
-		// for (i = 1; i < row - 1; i++) {
-		// for (int j = 1; j < col - 1; j++) {
-		// if (imgArr[matrix[i][j]] == 0 || imgArr[matrix[i][j]] % 2 > 0) {
-		// System.out.println(i + "," + j + "-" + imgArr[matrix[i][j]]
-		// + "-" + matrix[i][j]);
-		// }
-		// }
-		// }
 	}
 
 	public int getRow() {
